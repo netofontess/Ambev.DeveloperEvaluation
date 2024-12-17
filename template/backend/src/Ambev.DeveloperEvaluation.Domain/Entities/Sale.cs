@@ -95,7 +95,7 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
         /// <summary>
         /// Updates the total sale amount based on its items.
         /// </summary>
-        private void UpdateTotalAmount()
+        public void UpdateTotalAmount()
         {
             TotalAmount = Items.Sum(i => i.Total);
             UpdatedAt = DateTime.UtcNow;
