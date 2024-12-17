@@ -1,6 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.Domain.Services;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
@@ -11,17 +10,15 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
     public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleResult>
     {
         private readonly ISaleRepository _saleRepository;
-        private readonly ISaleService _saleService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSaleHandler"/> class.
         /// </summary>
         /// <param name="saleRepository">The repository for accessing sale data.</param>
         /// <param name="saleService">The service responsible for applying business rules.</param>
-        public CreateSaleHandler(ISaleRepository saleRepository, ISaleService saleService)
+        public CreateSaleHandler(ISaleRepository saleRepository)
         {
             _saleRepository = saleRepository;
-            _saleService = saleService;
         }
 
         /// <summary>
@@ -45,8 +42,6 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
                     UnitPrice = item.UnitPrice
                 }).ToList()
             };
-
-            _saleService.ApplyBusinessRules(sale);
 
             await _saleRepository.AddAsync(sale);
 
