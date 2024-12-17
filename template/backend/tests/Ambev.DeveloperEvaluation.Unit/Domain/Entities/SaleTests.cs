@@ -41,7 +41,7 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities
             var sale = new Sale { Items = new List<SaleItem>() };
 
             // Act
-            sale.UpdateTotalAmount(); // Chama o método correto
+            sale.UpdateTotalAmount();
 
             // Assert
             sale.TotalAmount.Should().Be(0.0m);
