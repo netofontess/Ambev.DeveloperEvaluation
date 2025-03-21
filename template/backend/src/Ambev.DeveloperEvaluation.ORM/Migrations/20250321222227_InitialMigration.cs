@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using BCrypt.Net;
 
 #nullable disable
 
@@ -25,7 +24,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     IsCancelled = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -44,7 +43,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -65,7 +64,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     TotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     IsCancelled = table.Column<bool>(type: "boolean", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -82,13 +81,6 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 name: "IX_SaleItems_SaleId",
                 table: "SaleItems",
                 column: "SaleId");
-
-            // Seed admin user
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Username", "Email", "Phone", "Password", "Role", "Status" },
-                values: new object[] { "admin", "admin@ambev.com", "1234567890", BCrypt.Net.BCrypt.HashPassword("Admin@123", workFactor: 11, enhancedEntropy: false), "Admin", "Active" }
-            );
         }
 
         /// <inheritdoc />

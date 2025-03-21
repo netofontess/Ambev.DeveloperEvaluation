@@ -70,10 +70,33 @@ public class User : Entity, IUser
     /// <summary>
     /// Initializes a new instance of the User class
     /// </summary>
-    public User()
+    public User() : base()
     {
         Role = UserRole.Customer;
         Status = UserStatus.Active;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the User class with all properties
+    /// </summary>
+    public User(
+        Guid id,
+        string username,
+        string email,
+        string phone,
+        string password,
+        UserRole role,
+        UserStatus status,
+        DateTime createdAt,
+        DateTime updatedAt
+    ) : base(id, createdAt, updatedAt)
+    {
+        Username = username;
+        Email = email;
+        Phone = phone;
+        Password = password;
+        Role = role;
+        Status = status;
     }
 
     /// <summary>

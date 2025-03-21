@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Application;
+using Ambev.DeveloperEvaluation.Application.Common;
 using Ambev.DeveloperEvaluation.Common.HealthChecks;
 using Ambev.DeveloperEvaluation.Common.Logging;
 using Ambev.DeveloperEvaluation.Common.Security;
@@ -14,7 +15,7 @@ namespace Ambev.DeveloperEvaluation.WebApi;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         try
         {
@@ -84,14 +85,20 @@ public class Program
 
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+            // Register DataSeeder
+            builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
 
-            // Run migrations
+            // Run migrations and seed data
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+                var seeder = scope.ServiceProvider.GetRequiredService<IDataSeeder>();
+                
                 dbContext.Database.Migrate();
+                await seeder.SeedAsync();
             }
 
             if (app.Environment.IsDevelopment())

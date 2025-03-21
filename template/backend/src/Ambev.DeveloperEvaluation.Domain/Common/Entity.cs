@@ -18,6 +18,13 @@ namespace Ambev.DeveloperEvaluation.Domain.Common
             UpdatedAt = now;
         }
 
+        protected Entity(Guid id, DateTime createdAt, DateTime updatedAt)
+        {
+            Id = id;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+        }
+
         public void SetUpdatedAt()
         {
             UpdatedAt = DateTime.UtcNow;

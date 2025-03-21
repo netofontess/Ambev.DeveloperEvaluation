@@ -1,7 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Text.RegularExpressions;
+using Ambev.DeveloperEvaluation.Domain.Enums;
+using BCrypt.Net;
 
 namespace Ambev.DeveloperEvaluation.ORM.Mapping;
 

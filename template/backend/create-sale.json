@@ -1,0 +1,15 @@
+{
+    "customerName": "Cliente Teste",
+    "branchName": "Filial SP",
+    "customerId": "f01ac1f8-35af-4d15-b153-2cf851304232",
+    "branchId": "f01ac1f8-35af-4d15-b153-2cf851304232",
+    "items": [
+        {
+            "productId": "f01ac1f8-35af-4d15-b153-2cf851304232",
+            "productName": "Cerveja Teste",
+            "quantity": 10,
+            "unitPrice": 10.50,
+            "discountPercentage": 5.0
+        }
+    ]
+} 
