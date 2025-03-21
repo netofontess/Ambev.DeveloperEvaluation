@@ -6,12 +6,11 @@ using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
-
 /// <summary>
 /// Represents a user in the system with authentication and profile information.
 /// This entity follows domain-driven design principles and includes business rules validation.
 /// </summary>
-public class User : BaseEntity, IUser
+public class User : Entity, IUser
 {
     /// <summary>
     /// Gets the user's full name.
@@ -29,7 +28,7 @@ public class User : BaseEntity, IUser
     /// Gets the user's phone number.
     /// Must be a valid phone number format following the pattern (XX) XXXXX-XXXX.
     /// </summary>
-    public string Phone { get; set; } = string.Empty ;
+    public string Phone { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets the hashed password for authentication.
@@ -42,7 +41,7 @@ public class User : BaseEntity, IUser
     /// Gets the user's role in the system.
     /// Determines the user's permissions and access levels.
     /// </summary>
-    public UserRole Role { get;     set; }
+    public UserRole Role { get; set; }
 
     /// <summary>
     /// Gets the user's current status.
@@ -51,20 +50,10 @@ public class User : BaseEntity, IUser
     public UserStatus Status { get; set; }
 
     /// <summary>
-    /// Gets the date and time when the user was created.
-    /// </summary>
-    public DateTime CreatedAt { get; set; }
-
-    /// <summary>
-    /// Gets the date and time of the last update to the user's information.
-    /// </summary>
-    public DateTime? UpdatedAt { get; set; }
-
-    /// <summary>
     /// Gets the unique identifier of the user.
     /// </summary>
-    /// <returns>The user's ID as a string.</returns>
-    string IUser.Id => Id.ToString();
+    /// <returns>The user's ID as a Guid.</returns>
+    Guid IUser.Id => Id;
 
     /// <summary>
     /// Gets the username.
@@ -79,30 +68,18 @@ public class User : BaseEntity, IUser
     string IUser.Role => Role.ToString();
 
     /// <summary>
-    /// Initializes a new instance of the User class.
+    /// Initializes a new instance of the User class
     /// </summary>
     public User()
     {
-        CreatedAt = DateTime.UtcNow;
+        Role = UserRole.Customer;
+        Status = UserStatus.Active;
     }
 
     /// <summary>
-    /// Performs validation of the user entity using the UserValidator rules.
+    /// Validates the user entity using FluentValidation
     /// </summary>
-    /// <returns>
-    /// A <see cref="ValidationResultDetail"/> containing:
-    /// - IsValid: Indicates whether all validation rules passed
-    /// - Errors: Collection of validation errors if any rules failed
-    /// </returns>
-    /// <remarks>
-    /// <listheader>The validation includes checking:</listheader>
-    /// <list type="bullet">Username format and length</list>
-    /// <list type="bullet">Email format</list>
-    /// <list type="bullet">Phone number format</list>
-    /// <list type="bullet">Password complexity requirements</list>
-    /// <list type="bullet">Role validity</list>
-    /// 
-    /// </remarks>
+    /// <returns>A validation result containing any validation errors</returns>
     public ValidationResultDetail Validate()
     {
         var validator = new UserValidator();
@@ -121,7 +98,7 @@ public class User : BaseEntity, IUser
     public void Activate()
     {
         Status = UserStatus.Active;
-        UpdatedAt = DateTime.UtcNow;
+        SetUpdatedAt();
     }
 
     /// <summary>
@@ -131,7 +108,7 @@ public class User : BaseEntity, IUser
     public void Deactivate()
     {
         Status = UserStatus.Inactive;
-        UpdatedAt = DateTime.UtcNow;
+        SetUpdatedAt();
     }
 
     /// <summary>
@@ -141,6 +118,6 @@ public class User : BaseEntity, IUser
     public void Suspend()
     {
         Status = UserStatus.Suspended;
-        UpdatedAt = DateTime.UtcNow;
+        SetUpdatedAt();
     }
 }

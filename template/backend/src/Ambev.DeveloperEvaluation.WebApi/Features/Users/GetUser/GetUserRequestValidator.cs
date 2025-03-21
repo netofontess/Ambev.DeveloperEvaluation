@@ -12,7 +12,7 @@ public class GetUserRequestValidator : AbstractValidator<GetUserRequest>
     /// </summary>
     public GetUserRequestValidator()
     {
-        RuleFor(x => x.Id)
+        RuleFor(request => request.Id)
             .NotEmpty()
             .WithMessage("User ID is required");
     }

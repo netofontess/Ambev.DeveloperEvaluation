@@ -36,4 +36,14 @@ public class GetUserResponse
     /// The current status of the user
     /// </summary>
     public UserStatus Status { get; set; }
+
+    public GetUserResponse()
+    {
+        Id = Guid.Empty;
+        Name = string.Empty;
+        Email = string.Empty;
+        Phone = string.Empty;
+        Status = UserStatus.Active;
+        Role = UserRole.Customer;
+    }
 }

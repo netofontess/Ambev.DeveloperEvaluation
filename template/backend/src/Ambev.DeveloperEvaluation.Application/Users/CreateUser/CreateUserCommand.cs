@@ -50,6 +50,15 @@ public class CreateUserCommand : IRequest<CreateUserResult>
     /// </summary>
     public UserRole Role { get; set; }
 
+    public CreateUserCommand()
+    {
+        Username = string.Empty;
+        Password = string.Empty;
+        Email = string.Empty;
+        Phone = string.Empty;
+        Status = UserStatus.Active;
+        Role = UserRole.Customer;
+    }
 
     public ValidationResultDetail Validate()
     {
